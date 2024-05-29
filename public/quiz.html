@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互动测验</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- 引入Socket.IO客户端库 -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <header>
+        <h1>互动测验</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="quiz.html" class="active">测验</a></li>
+            </ul>
+        </nav>
+    </header>
+    <form id="name-form">
+        <label for="name-input">请输入你的名字：</label>
+        <input type="text" id="name-input" required />
+        <button type="submit">提交</button>
+    </form>
+    <button id="start-quiz-btn">开始测验</button>
+    <main id="quiz-container">
+        <!-- 测验内容将通过JavaScript动态加载 -->
+    </main>
+    <footer>
+        <p>版权所有 &copy; 2024 你的名字</p>
+    </footer>
+    <script src="quiz.js"></script> <!-- 引入自定义的JavaScript文件 -->
+</body>
+</html>
