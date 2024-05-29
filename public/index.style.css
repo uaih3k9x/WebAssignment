@@ -21,10 +21,20 @@ body {
 }
 
 .fadeIn {
+    opacity: 0;
     animation: fadeIn 0.5s ease forwards;
 }
 
+@font-face {
+    font-family: 'EleBb-2';
+    src: url('/font/Elegant-blackbody-2.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 .introduction {
+    font-family: 'EleBb-2',sans-serif;
     background: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
@@ -42,7 +52,7 @@ body {
 }
 
 .delay-2 {
-    animation-delay: 0.2s;
+    animation-delay: 0.25s;
 }
 
 .delay-3 {
@@ -55,6 +65,7 @@ body {
     display: block;
 } */
 header {
+    font-family: 'EleBb-2',sans-serif;
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
@@ -108,6 +119,7 @@ main {
 }
 
 .card {
+    font-family: 'EleBb-2',sans-serif;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -147,6 +159,7 @@ main {
 }
 
 footer {
+    font-family: 'EleBb-2',sans-serif;
     background-color: #333;
     color: #fff;
     text-align: center;

@@ -12,7 +12,57 @@ body {
     flex-direction: column;
 }
 
+@font-face {
+    font-family: 'EleBb-2';
+    src: url('/font/Elegant-blackbody-2.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SourceHansCN_Bold';
+    src: url('/font/SourceHanSerifCN-Bold-2.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SourceHansCN_Light';
+    src: url('/font/SourceHanSerifCN-Light-5.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeIn {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.delay-2 {
+    animation-delay: 0.25s;
+}
+
+.delay-3 {
+    animation-delay: 0.3s;
+}
+
 header {
+    font-family: 'EleBb-2',sans-serif;
     background-color: #411414;
     color: #c7d6ff;
     padding: 10px 20px;
@@ -54,6 +104,7 @@ main {
 }
 
 .profile-container {
+    font-family: 'SourceHansCN_Bold',sans-serif;
     background: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
@@ -64,6 +115,7 @@ main {
 }
 
 .introduction {
+    font-family: 'SourceHansCN_Bold',sans-serif;
     background: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
@@ -75,10 +127,12 @@ main {
 }
 
 .introduction h2 {
+    font-family: 'SourceHansCN_Bold',sans-serif;
     margin-top: 0;
 }
 
 .avatar {
+    font-family: 'SourceHansCN_Bold',sans-serif;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -93,6 +147,7 @@ main {
 }
 
 table {
+    font-family: 'SourceHansCN_Bold',sans-serif;
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -101,6 +156,10 @@ table {
 th, td {
     padding: 10px;
     text-align: left;
+}
+
+td{
+    font-family: 'SourceHansCN_Light',sans-serif;
 }
 
 th {
@@ -123,6 +182,7 @@ tr:nth-child(even) {
 }
 
 footer {
+    font-family: 'EleBb-2',sans-serif;
     background-color: #333;
     color: #fff;
     text-align: center;
