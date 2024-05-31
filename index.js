@@ -70,13 +70,16 @@ io.on('connection', (socket) => {
         if (currentQuestion < quizQuestions.length) {
             io.to(socket.id).emit('question', quizQuestions[currentQuestion]);
         } else {
-            io.to(socket.id).emit('quizEnd');
+            
             // recordUser(socket.id); // 记录用户信息和作答情况
 
             console.log(UCjson); // 需要从客户端获取用户名
             endTime = Date.now();
             username = UCjson.username;
             const correctAnswers = UCjson.correctAnswers; // 需要根据用户作答情况计算
+            const totalTime = Math.floor((endTime - startTime)/1000);
+            const totalQuestion = quizQuestions.length;
+            io.to(socket.id).emit('quizEnd',{username,correctAnswers,totalTime,totalQuestion});
             recordUser(socket, username, correctAnswers,endTime,startTime);
         }
     });
@@ -102,11 +105,13 @@ io.on('connection', (socket) => {
 
     // 当测验结束
     socket.on('endQuiz', (UCjson) => {
-        socket.emit('quizEnd');
+        // socket.emit('quizEnd');
         console.log(UCjson); // 需要从客户端获取用户名
         endTime = Date.now();
         username = UCjson.username;
         const correctAnswers = UCjson.correctAnswers; // 需要根据用户作答情况计算
+        const totalTime = Math.floor((endTime - startTime)/1000);
+        socket.emit('quizEnd',{username,correctAnswers,totalTime});
         recordUser(socket, username, correctAnswers,endTime,startTime);
     });
 
@@ -118,7 +123,7 @@ io.on('connection', (socket) => {
 });
 
 function recordUser(socket, username, correctAnswers, endTime, startTime) {
-    const totalTime = endTime - startTime; // 计算作答所用时间
+    const totalTime = Math.floor((endTime - startTime)/1000);
     const newUser = { username, correctAnswers, time: totalTime };
 
     // 检查用户是否已存在于排行榜中

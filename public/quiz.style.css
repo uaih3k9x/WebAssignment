@@ -83,6 +83,7 @@ tbody{
 }
 
 .table-container {
+    font-family: 'SourceHansCN_Bold', sans-serif;
     opacity: 0;
     transition: all 0.5s;
     background: #fff;
@@ -118,11 +119,13 @@ tr.show {
 }
 
 th, td {
+    font-family: 'SourceHansCN_Light', sans-serif;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
 
 th {
+    font-family: 'SourceHansCN_Bold', sans-serif;
     opacity: 1;
     color: #000;
     background-color: #f9f9f9;
