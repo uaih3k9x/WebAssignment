@@ -62,6 +62,32 @@
 ### quiz.js (Client-Side Quiz Logic)
 - Manages the client-side logic of the quiz, including form submission, starting the quiz, submitting answers, and handle the updating of the elements.
 
+#### Quiz page design
+![](./md_imgs/prompt1.png)
+
+Prompt, ask the user to enter the username.
+
+![](./md_imgs/disable_prompt.png)
+Prompt change,disable the button and prevent the username editing.
+
+![](./md_imgs/quiz_page_UI.png)
+
+Ask the question and then user can click the button to submit.
+
+![](./md_imgs/correct.png)
+![](./md_imgs/fail.png)
+
+If the anwser is correct or incorrect.
+
+The correct number may change if the anwser is right.
+
+![](./md_imgs/correct_number_change.png)
+
+The leaderboard design and the prompt will change after the quiz end.
+
+![](./md_imgs/result.png)
+
+
 ### socket.io
 #### Server side
 - `io.on('connection', (socket) => {...})`: Triggered when a new client connects.
