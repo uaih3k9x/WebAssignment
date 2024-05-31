@@ -106,10 +106,3 @@ this keyframe animation will make an element fadeIn which will make the whole we
 
 ### Color design.
 - I used Adobe Color for color matching and used the low-brightness colors, which made the UI Sophistication: Dark or low brightness color schemes often convey a sense of luxury and professionalism, which is popular in many modern and tech-savvy designs.
-
-
-
----
-
-This documentation serves as a guide to understanding the structure and functionality of the `WebAssignment` project. For more detailed information on each file, please refer to the respective file contents.
-

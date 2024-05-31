@@ -26,57 +26,48 @@ function loadLeaderboard() {
         users = fs.readFileSync(leaderboardFilePath);
         return JSON.parse(users);
     } catch (error) {
-        return []; // 如果文件不存在或读取出错，返回空数组
+        return []; // return a empty array
     }
 }
 const leaderboard = loadLeaderboard();
-// 测验题目数据
+// questions.
 const quizQuestions = [
-    { id: 1, question: "What is 1 + 1?", choices: ["A) 2", "B) 3", "C) 4", "D) 5"], correctAnswer: "A) 2" },
-    { id: 2, question: "What is an Ethernet Switch?", choices: ["A) Gaming Console?", "B) A device for network", "C) I don't know!", "D) I don't care!"], correctAnswer: "B) A device for network" },
-    { id: 3, question: "Which planet is known as the Red Planet?", choices: ["A) Earth", "B) Mars", "C) Jupiter", "D) Saturn"], correctAnswer: "B) Mars" },
-    { id: 4, question: "What is the largest ocean on Earth?", choices: ["A) Atlantic Ocean", "B) Indian Ocean", "C) Arctic Ocean", "D) Pacific Ocean"], correctAnswer: "D) Pacific Ocean" },
-    { id: 5, question: "Who wrote 'Romeo and Juliet'?", choices: ["A) Charles Dickens", "B) Mark Twain", "C) William Shakespeare", "D) Jane Austen"], correctAnswer: "C) William Shakespeare" },
-    { id: 6, question: "What is the smallest prime number?", choices: ["A) 0", "B) 1", "C) 2", "D) 3"], correctAnswer: "C) 2" },
-    { id: 7, question: "In which year did the Titanic sink?", choices: ["A) 1912", "B) 1905", "C) 1898", "D) 1923"], correctAnswer: "A) 1912" },
-    { id: 8, question: "What is the chemical symbol for gold?", choices: ["A) Au", "B) Ag", "C) Pb", "D) Hg"], correctAnswer: "A) Au" },
-    { id: 9, question: "Who painted the Mona Lisa?", choices: ["A) Vincent van Gogh", "B) Pablo Picasso", "C) Leonardo da Vinci", "D) Michelangelo"], correctAnswer: "C) Leonardo da Vinci" },
-    { id: 10, question: "What is the main ingredient in guacamole?", choices: ["A) Tomato", "B) Avocado", "C) Onion", "D) Pepper"], correctAnswer: "B) Avocado" }
+    { id: 1, question: "What is the sum of 5 and 7?", choices: ["A) 10", "B) 12", "C) 14", "D) 16"], correctAnswer: "B) 12" },
+    { id: 2, question: "If a book has 30 pages and you read 5 pages each day, how many days will it take to finish the book?", choices: ["A) 5 days", "B) 6 days", "C) 7 days", "D) 8 days"], correctAnswer: "B) 6 days" },
+    { id: 3, question: "What is the product of 4 and 9?", choices: ["A) 36", "B) 32", "C) 28", "D) 24"], correctAnswer: "A) 36" },
+    { id: 4, question: "If you have 12 apples and give 3 to your friend, how many apples do you have left?", choices: ["A) 9", "B) 10", "C) 11", "D) 12"], correctAnswer: "A) 9" },
+    { id: 5, question: "What is the difference between 18 and 9?", choices: ["A) 9", "B) 8", "C) 7", "D) 6"], correctAnswer: "A) 9" }
 ];
 
-// 测验逻辑
+// quiz logic
 io.on('connection', (socket) => {
     console.log('New client connected');
     let currentQuestion = 0;
-    let startTime = Date.now(); // 记录开始作答的时间
+    let startTime;
     let username;
     
     socket.on('userName',(name) => {
         username=name;
     })
-    // 发送测验题目
+    // send question
     socket.on('startQuiz', () => {
         console.log("Quiz started");
         currentQuestion = 0;
-        startTime = Date.now(); // 记录开始作答的时间
+        startTime = Date.now(); // update
         if (currentQuestion < quizQuestions.length) {
             io.to(socket.id).emit('question', quizQuestions[currentQuestion]);
         }
     });
 
-    // 当用户请求下一题
+    // on next question
     socket.on('nextQuestion', (UCjson) => {
         currentQuestion++;
         if (currentQuestion < quizQuestions.length) {
             io.to(socket.id).emit('question', quizQuestions[currentQuestion]);
         } else {
-            
-            // recordUser(socket.id); // 记录用户信息和作答情况
-
-            console.log(UCjson); // 需要从客户端获取用户名
             endTime = Date.now();
             username = UCjson.username;
-            const correctAnswers = UCjson.correctAnswers; // 需要根据用户作答情况计算
+            const correctAnswers = UCjson.correctAnswers; // record the correct number
             const totalTime = Math.floor((endTime - startTime)/1000);
             const totalQuestion = quizQuestions.length;
             io.to(socket.id).emit('quizEnd',{username,correctAnswers,totalTime,totalQuestion});
@@ -84,7 +75,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    // 当用户回答问题
+    // on anwser
     socket.on('answer', (data) => {
         const currentQuestionIndex = currentQuestion;
 
@@ -93,29 +84,18 @@ io.on('connection', (socket) => {
             const isCorrect = data === correctAnswerIndex;
 
             io.to(socket.id).emit('result', isCorrect);
-
-            // if (isCorrect) {
-            //     // 如果回答正确，记录作答情况
-            //     const endTime = Date.now();
-            //     const totalTime = endTime - startTime; // 计算作答所用时间
-            //     users.push({ username, time: totalTime });
-            // }
         }
     });
 
-    // 当测验结束
+    // on quiz end
     socket.on('endQuiz', (UCjson) => {
-        // socket.emit('quizEnd');
-        console.log(UCjson); // 需要从客户端获取用户名
         endTime = Date.now();
         username = UCjson.username;
-        const correctAnswers = UCjson.correctAnswers; // 需要根据用户作答情况计算
+        const correctAnswers = UCjson.correctAnswers;
         const totalTime = Math.floor((endTime - startTime)/1000);
         socket.emit('quizEnd',{username,correctAnswers,totalTime});
         recordUser(socket, username, correctAnswers,endTime,startTime);
     });
-
-    // 当时间到
 
     socket.on('disconnect', () => {
         console.log('Client disconnected');
@@ -126,28 +106,28 @@ function recordUser(socket, username, correctAnswers, endTime, startTime) {
     const totalTime = Math.floor((endTime - startTime)/1000);
     const newUser = { username, correctAnswers, time: totalTime };
 
-    // 检查用户是否已存在于排行榜中
+    // check if exist
     const existingUserIndex = leaderboard.findIndex(user => user.username === username);
 
     if (existingUserIndex !== -1) {
-        // 用户已存在，更新其信息
+        // update the info
         leaderboard[existingUserIndex] = newUser;
     } else {
-        // 用户不存在，添加新用户
+        // add a new record
         leaderboard.push(newUser);
     }
 
-    // 根据答对题目数量和作答时间进行排序
+    // sort algorithm
     leaderboard.sort((a, b) => {
-        // 首先按答对题目数量排序
+        // sort the correct anwser
         if (a.correctAnswers !== b.correctAnswers) {
-            return b.correctAnswers - a.correctAnswers; // 答对数量多的排在前面
+            return b.correctAnswers - a.correctAnswers; // correct more will be more frontier
         }
-        // 如果答对题目数量相同，则按作答时间排序
+        // if correct the same
         if (a.time !== b.time) {
-            return a.time - b.time; // 作答时间少的排在前面
+            return a.time - b.time; // less time frontier
         }
-        // 如果作答时间和答对题目数量都相同，则按用户名字典序排序
+        // if the same sort by the username
         if (a.username.toLowerCase() < b.username.toLowerCase()) {
             return -1;
         } else if (a.username.toLowerCase() > b.username.toLowerCase()) {
@@ -157,30 +137,11 @@ function recordUser(socket, username, correctAnswers, endTime, startTime) {
         }
     });
 
-    saveLeaderboard(leaderboard); // 保存排行榜数据
+    saveLeaderboard(leaderboard); // save data
 }
 
 
-// 返回排行榜
-// 返回排行榜
 app.get('/leaderboard', (req, res) => {
-    // // 按照成绩优先、答对数量优先、作答时间更短优先的顺序排序
-    // leaderboard.sort((a, b) => {
-    //     if (a.time !== b.time) {
-    //         return a.time - b.time; // 作答时间更短排在前面
-    //     } else {
-    //         // 如果作答时间相同，按照答对数量排序
-    //         const correctAnswersA = leaderboard.filter(u => u.username === a.username).length;
-    //         const correctAnswersB = leaderboard.filter(u => u.username === b.username).length;
-    //         if (correctAnswersA !== correctAnswersB) {
-    //             return correctAnswersB - correctAnswersA; // 答对数量多的排在前面
-    //         } else {
-    //             // 如果答对数量也相同，按照成绩优先，即 socket 连接时间早的排在前面
-    //             return leaderboard.indexOf(a) - leaderboard.indexOf(b);
-    //         }
-    //     }
-    // });
-
     res.json(leaderboard);
 });
 
