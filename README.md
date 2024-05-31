@@ -1,6 +1,6 @@
 # JC2503 Web Application Development
 
-This document provides a detailed explanation of the `WebAssignment` project, which is a web application developed as part of the JC2503 Web Application Development course.
+50087391 Ruijie Wan
 
 ## Directory Structure
 
@@ -28,36 +28,39 @@ This document provides a detailed explanation of the `WebAssignment` project, wh
 
 ## Core Files and Functionality
 
-### index.js (Server Configuration and Quiz Logic)
-- Initializes an Express server and integrates Socket.IO for real-time communication.
+### index.js (Server Configuration and Quiz Backend Logic)
+- This Javascript initializes an Express server and integrates Socket.IO for real-time communication.
 - Serves static files from the `public` directory.
 - Manages quiz questions and user interactions through websocket events.
 - Handles leaderboard data with functions to save and load user scores.
 
 ### leaderboard.json (Leaderboard Data)
 - This JSON file that stores an array of user scores, including username, number of correct answers, and time taken.
-- This JSON is sorted so can directly load it as the leaderboard.
+- This JSON is sorted so it can directly load it as the leaderboard.
 
 ### about.html (About Page)
 - An HTML page providing personal information about myself.
+- I used SourceHanSerif_Bold and Light for a solemn view.
 
 ### about.style.css (Styles for About Page)
 - CSS styles for the `about.html` page, including background gradients, font faces, and animations.
 
 ### index.html (Home Page)
 - The landing page of the web application with navigation links to the about page and quiz page.
+- Elegant-Blackbody font are used to provide a retro-game style view
 
 ### index.style.css (Styles for Home Page)
 - CSS styles for the home page, including background images and animations.
 
 ### quiz.html (Quiz Page)
 - HTML structure for the quiz page where users can participate in the quiz.
+- Most of the work are in the CSS and the JS file, to update the elements real-time.
 
 ### quiz.style.css (Styles for Quiz Page)
 - CSS styles for the `quiz.html` page, including background images, font faces, and animations.
 
 ### quiz.js (Client-Side Quiz Logic)
-- Manages the client-side logic of the quiz, including form submission, starting the quiz, submitting answers, and handling the quiz end.
+- Manages the client-side logic of the quiz, including form submission, starting the quiz, submitting answers, and handle the updating of the elements.
 
 ### socket.io
 #### Server side
@@ -106,3 +109,14 @@ this keyframe animation will make an element fadeIn which will make the whole we
 
 ### Color design.
 - I used Adobe Color for color matching and used the low-brightness colors, which made the UI Sophistication: Dark or low brightness color schemes often convey a sense of luxury and professionalism, which is popular in many modern and tech-savvy designs.
+
+
+### Challenges.
+- The most of the challenge that I faced is the frontend UI design. I'm not very skilled in the css and html design. I tried many times to make the animation for the opacity and the transitionY. I used the skill that I learned when I'm learning the video editing and VFX. I think I've made the best view that I can do.
+
+- I tried to design the backend in the http request way, And I'm confused if I need to use the socket because I think it may be harder to maintain a 'state machine'. But the socket is familiar with the http, I can easily design what to response in a specific request. So finally I switched to the socket IO in the quiz logic, But I kept the leaderboard as a http API for further work like if we need to show the leaderboard as the default view of the quiz page.
+
+
+---
+Thank for your review, That is all of my work.
+
